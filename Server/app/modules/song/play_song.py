@@ -2,11 +2,14 @@ import time
 import subprocess as sp
 import sys
 import os
+import numpy as np
 def play():
-	try:	
+	try:
 		path = os.getcwd() + '/app/medias/'
-		song_name = path+"i want to get free.mp3";
-		p = sp.Popen(["vlc",song_name])
+		dir_list = os.listdir(path)
+		rand_num = np.random.randint(0,len(dir_list))
+		song_name = dir_list[rand_num]
+		p = sp.Popen(["vlc",path+song_name])
 		print str(p.pid)
 		return {'status':True,'pid':p.pid}	
 	except Exception as e:

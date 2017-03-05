@@ -5,6 +5,7 @@ from modules.song import play_song
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from TextProcessing import ProcessText as pt
+from speak import tts
 import os
 process_stack = []
 
@@ -30,9 +31,9 @@ def textProcessing(request):
         return redirect('exitProcess')
     else:
         context = {'status': True,
-                   'val'   : 'I am not that smart! Still learning :-)',
+                   'val'   : 'You Fuck off',
                    'url'   : 'home/?query=',}
-
+    tts.main(context['val'])
     return JsonResponse(context)
 
 
@@ -46,6 +47,7 @@ def video(request):
     context = {'status' :True,
                'val'    :'Started playing, Enjoy!',
                'url'    :'home/?query='}
+    tts.main(context['val'])
     return JsonResponse(context)
 
 @csrf_exempt
@@ -61,6 +63,7 @@ def song(request):
                    'val': 'Oh snap! Something went wrong',
                    'url': 'home/?query='}
 
+    tts.main(context['val'])
     return JsonResponse(context)
 
 @csrf_exempt

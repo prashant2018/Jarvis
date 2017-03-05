@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
     public void init(){
-        url = "http://192.168.43.242:8000/";
+        url = "http://192.168.43.242:8090/";
         url_ext = "home/?query=";
         sender="Prashant";
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onCompleted(Exception e, JsonObject result) {
                         if(e!=null){
                             recyclerRefresh("Jarvis","I think there is a network problem!");
+                            url_ext = "home/?query=";
                         }
                         else if (result.get("status").getAsBoolean()) {
                             String msg = result.get("val").getAsString();
