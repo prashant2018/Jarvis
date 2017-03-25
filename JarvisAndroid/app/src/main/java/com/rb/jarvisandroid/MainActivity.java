@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
     public void init(){
-        url = "http://192.168.43.242:8090/";
+        url = "http://192.168.1.39:8000/";
         url_ext = "home/?query=";
         sender="Prashant";
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);

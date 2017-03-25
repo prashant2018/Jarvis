@@ -6,9 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from TextProcessing import ProcessText as pt
 from speak import tts
+import signal
 import os
-process_stack = []
+from modules.news import news_fetch
 
+process_stack = []
 
 
 @csrf_exempt
@@ -21,18 +23,38 @@ def textProcessing(request):
                    'val'    : 'Which one would you like to listen ?!',
                    'url'    : 'video/?name=',}
     elif id==2:
-        context = {'status': True,
-                   'val': 'Which one would you like to listen ?!',
-                   'url': 'song/?name=',}
-
         return redirect('song')
+
+    elif id == 7:
+        context = {'status': True,
+                   'val': 'Hi, I am Jarvis. Have a good day.',
+                   'url': 'home/?query=',}
+
+    elif id == 3:
+        return redirect('news')
 
     elif id==100:
         return redirect('exitProcess')
+
     else:
         context = {'status': True,
-                   'val'   : 'You Fuck off',
+                   'val'   : 'I am still learning. Thankyou',
                    'url'   : 'home/?query=',}
+
+    tts.main(context['val'])
+    return JsonResponse(context)
+
+
+
+@csrf_exempt
+def news(request):
+    print "yo"
+    headlines = news_fetch.main()
+    print headlines
+    context = {'status': True,
+               'val': 'Todays Headline. '+headlines,
+               'url': 'home/?query='}
+
     tts.main(context['val'])
     return JsonResponse(context)
 
@@ -47,6 +69,7 @@ def video(request):
     context = {'status' :True,
                'val'    :'Started playing, Enjoy!',
                'url'    :'home/?query='}
+
     tts.main(context['val'])
     return JsonResponse(context)
 
@@ -55,6 +78,7 @@ def song(request):
     statusJson = play_song.play()
     if statusJson['status'] == True:
         process_stack.append(statusJson['pid'])
+        print '-------------------------'+str(statusJson['pid'])
         context = {'status': True,
                    'val': 'Enjoy Your Song!',
                    'url': 'home/?query='}
@@ -68,14 +92,16 @@ def song(request):
 
 @csrf_exempt
 def exitProcess(request):
+    print process_stack
     try:
         pid = process_stack[len(process_stack)-1]
-        os.system(pid.kill)
+        os.kill(pid,signal.SIGKILL)
         context = {'status': True,
                    'val': 'Yo killed the process!',
                    'url': 'home/?query=',}
-    except:
+    except Exception as e:
+        print e
         context = {'status': False,
                    'val': 'Unable to terminate',
                    'url': 'home/?query=',}
-    return context
+    return JsonResponse(context)

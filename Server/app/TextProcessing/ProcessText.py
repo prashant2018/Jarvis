@@ -3,7 +3,6 @@ import nltk
 import json
 import ast
 from nltk.tokenize import word_tokenize
-
 import os
 
 def getGraph(name):
@@ -32,6 +31,7 @@ def getCommandId(words):
 def processText(words):
 	#NLP	
 	words_ = word_tokenize(words)
+	words_.append('.')
 	return words_
 
 

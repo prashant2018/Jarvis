@@ -1,12 +1,23 @@
 
 	{
-	"play" : { "video" : 1,
-			  "song" : 2},
+		"play" : { "video" : 1,
+			  		"song" : 2},
 	
-	"send" :{"news" : 3,
-			"jokes" : 4,
-			"score" : 5,
-			"weather": 6},
+		"send" :{"news" : 3,
+				"jokes" : 4,
+				"score" : 5,
+				"weather": 6},
 
-	"exit" :{"process":100}
+		"close" :{"process":100,
+			 	"song":100,
+				"video":100},
+
+		"hi" : {".":7},
+		"hey" : {".":7},
+		"hello" : {".":7}
+
+
+
+
+
 	}
