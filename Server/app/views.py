@@ -9,6 +9,7 @@ from speak import tts
 import signal
 import os
 from modules.news import news_fetch
+from modules.weather import weather_fetch
 
 process_stack = []
 
@@ -25,13 +26,24 @@ def textProcessing(request):
     elif id==2:
         return redirect('song')
 
-    elif id == 7:
-        context = {'status': True,
-                   'val': 'Hi, I am Jarvis. Have a good day.',
-                   'url': 'home/?query=',}
-
     elif id == 3:
         return redirect('news')
+
+    elif id == 6:
+        return redirect('weather')
+
+    elif id == 7:
+        context = {'status': True,
+                   'val': 'Hi, Have a good day.',
+                   'url': 'home/?query=',}
+    elif id == 8:
+        context = {'status': True,
+                   'val': 'A very good morning to you .',
+                   'url': 'home/?query=',}
+    elif id == 9:
+        context = {'status': True,
+                   'val': 'I am Jarvis. I was developed by Neural Mind team. I will try my best to serve you. ',
+                   'url': 'home/?query=',}
 
     elif id==100:
         return redirect('exitProcess')
@@ -47,8 +59,29 @@ def textProcessing(request):
 
 
 @csrf_exempt
+def weather(request):
+    try:
+        d = weather_fetch.main()
+        temp = d['Temp']
+        humid = d['Humidity']
+        disc = d['Description']
+
+        s = "Weather is "+disc+", temperature "+str(temp)+" degree , humidity "+str(humid)
+        context = {'status': True,
+                   'val': s,
+                   'url': 'home/?query=',}
+    except Exception as e:
+        print e
+        context = {'status': True,
+                   'val': 'Sorry, Unable to fetch wether report',
+                   'url': 'home/?query=',}
+
+    tts.main(context['val'])
+    return JsonResponse(context)
+
+@csrf_exempt
 def news(request):
-    print "yo"
+    print "Fetching News"
     headlines = news_fetch.main()
     print headlines
     context = {'status': True,
@@ -65,10 +98,15 @@ def video(request):
     status  = youtube.main(name)
     if status['pid']!=-1:
         process_stack.append(status['pid'])
+        context = {'status': True,
+                   'val': 'Started playing, Enjoy!',
+                   'url': 'home/?query='}
+    else:
+        context = {'status': True,
+                   'val': 'Something went wrong!',
+                   'url': 'home/?query='}
 
-    context = {'status' :True,
-               'val'    :'Started playing, Enjoy!',
-               'url'    :'home/?query='}
+
 
     tts.main(context['val'])
     return JsonResponse(context)
@@ -97,11 +135,12 @@ def exitProcess(request):
         pid = process_stack[len(process_stack)-1]
         os.kill(pid,signal.SIGKILL)
         context = {'status': True,
-                   'val': 'Yo killed the process!',
+                   'val': 'Sure. Closing it.',
                    'url': 'home/?query=',}
     except Exception as e:
         print e
         context = {'status': False,
                    'val': 'Unable to terminate',
                    'url': 'home/?query=',}
+
     return JsonResponse(context)

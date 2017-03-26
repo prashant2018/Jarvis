@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^video/',app.views.video,name='video'),
     url(r'^song/',app.views.song,name='song'),
     url(r'^news/',app.views.news,name='news'),
+    url(r'^weather/',app.views.weather,name='weather'),
     url(r'^exitProcess/',app.views.exitProcess,name='exitProcess'),
 ]

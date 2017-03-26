@@ -1,9 +1,15 @@
 
 	{
 		"play" : { "video" : 1,
-			  		"song" : 2},
+			  		"song" : 2,
+					"music" : 2},
 	
 		"send" :{"news" : 3,
+				"jokes" : 4,
+				"score" : 5,
+				"weather": 6},
+
+		"tell" :{"news" : 3,
 				"jokes" : 4,
 				"score" : 5,
 				"weather": 6},
@@ -13,8 +19,11 @@
 				"video":100},
 
 		"hi" : {".":7},
-		"hey" : {".":7},
-		"hello" : {".":7}
+		"hello" : {".":7},
+		"good" : {"morning":8},
+		"jarvis":{"introduce" : 9,
+					"yourself":9}
+
 
 
 
