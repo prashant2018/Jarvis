@@ -29,7 +29,6 @@ def getCommandId(words):
 	return -1
 		
 def processText(words):
-	#NLP	
 	words_ = word_tokenize(words)
 	words_.append('.')
 	return words_
@@ -50,3 +49,5 @@ def successMessage(message):
 
 def soryyMessage():
 	print "Sorry Unable to process"
+
+	#NLP

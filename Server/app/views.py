@@ -10,8 +10,11 @@ import signal
 import os
 from modules.news import news_fetch
 from modules.weather import weather_fetch
+from modules.responses import response
+from modules.quotes import quotes_fetch
 
 process_stack = []
+
 
 
 @csrf_exempt
@@ -29,12 +32,16 @@ def textProcessing(request):
     elif id == 3:
         return redirect('news')
 
+    elif id == 4:
+        redirect('quotes')
+
     elif id == 6:
         return redirect('weather')
 
     elif id == 7:
+        val = response.greet()
         context = {'status': True,
-                   'val': 'Hi, Have a good day.',
+                   'val': val,
                    'url': 'home/?query=',}
     elif id == 8:
         context = {'status': True,
@@ -44,13 +51,18 @@ def textProcessing(request):
         context = {'status': True,
                    'val': 'I am Jarvis. I was developed by Neural Mind team. I will try my best to serve you. ',
                    'url': 'home/?query=',}
-
+    elif id == 10:
+        val = response.jokes()
+        context = {'status': True,
+                   'val': val,
+                   'url': 'home/?query=',}
     elif id==100:
         return redirect('exitProcess')
 
     else:
+        val = response.regret()
         context = {'status': True,
-                   'val'   : 'I am still learning. Thankyou',
+                   'val'   : val,
                    'url'   : 'home/?query=',}
 
     tts.main(context['val'])
@@ -111,6 +123,7 @@ def video(request):
     tts.main(context['val'])
     return JsonResponse(context)
 
+
 @csrf_exempt
 def song(request):
     statusJson = play_song.play()
@@ -142,5 +155,5 @@ def exitProcess(request):
         context = {'status': False,
                    'val': 'Unable to terminate',
                    'url': 'home/?query=',}
-
+    tts.main(context['val'])
     return JsonResponse(context)

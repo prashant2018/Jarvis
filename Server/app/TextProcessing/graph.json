@@ -5,18 +5,23 @@
 					"music" : 2},
 	
 		"send" :{"news" : 3,
-				"jokes" : 4,
+				"quote" : 4,
+				"quotes" : 4,
 				"score" : 5,
-				"weather": 6},
+				"weather": 6,
+				"joke":10},
 
 		"tell" :{"news" : 3,
-				"jokes" : 4,
+				"quotes" : 4,
+				"quote":4,
 				"score" : 5,
-				"weather": 6},
+				"weather": 6,
+				"joke":10},
 
 		"close" :{"process":100,
 			 	"song":100,
-				"video":100},
+				"video":100,
+		        "it":100},
 
 		"hi" : {".":7},
 		"hello" : {".":7},
