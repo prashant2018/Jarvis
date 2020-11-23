@@ -6,7 +6,7 @@ Client side is an Android app and sever is written on Python-Django.
 ### [Client Code (Android App)](https://github.com/prashant2018/Jarvis/tree/master/JarvisAndroid):
 Image
 
-### [Server Code (Django)](https://github.com/prashant2018/Jarvis/tree/master/JarvisAndroid) :
+### [Server Code (Django)](https://github.com/prashant2018/Jarvis/tree/master/Server) :
 Image
 
 
